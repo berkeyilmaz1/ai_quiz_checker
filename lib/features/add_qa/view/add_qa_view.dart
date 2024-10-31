@@ -7,8 +7,8 @@ import 'package:ai_quiz_checker/product/widget/custom_elevated_button.dart';
 import 'package:ai_quiz_checker/product/widget/custom_text_field.dart';
 import 'package:ai_quiz_checker/product/widget/page/page_padding.dart';
 import 'package:ai_quiz_checker/product/widget/widget_sizes.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:kartal/kartal.dart';
 
 part '../widget/image_buttons.dart';
 part '../widget/image_picker_button.dart';
@@ -16,7 +16,9 @@ part '../widget/image_view.dart';
 part '../widget/question_textfield.dart';
 part '../widget/save_button.dart';
 
-class AddQAView extends StatefulWidget {
+@RoutePage()
+final class AddQAView extends StatefulWidget {
+  const AddQAView({super.key});
   @override
   _AddQAViewState createState() => _AddQAViewState();
 }

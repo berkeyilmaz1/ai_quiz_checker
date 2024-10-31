@@ -10,12 +10,11 @@ final class SaveButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Padding(
-          padding: PagePadding.all(),
-          child: CustomElevatedButton(
-            buttonText: ProductConstants.save,
-            onPressed: onPressed,
-          ).ext.toDisabled(disable: controller.text.isEmpty),
-        ),
+            padding: PagePadding.all(),
+            child: CustomElevatedButton(
+              buttonText: ProductConstants.save,
+              onPressed: onPressed,
+            )),
       ],
     );
   }

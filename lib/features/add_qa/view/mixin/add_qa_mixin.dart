@@ -57,7 +57,9 @@ mixin AddQAMixin on State<AddQAView> {
   ) {
     return showDialog(
       context: context,
-      builder: (context) => ConfirmationDialog(),
+      builder: (context) => ConfirmationDialog(
+        onYes: () {},
+      ),
     );
   }
 

@@ -11,18 +11,28 @@ dependencies:
   flutter:
     sdk: flutter
 
+  #State
   flutter_bloc: ^8.1.6
+
+  #Caching
   shared_preferences: ^2.3.2
-  equatable: ^2.0.5
+
   image_picker: ^1.1.2
   google_mlkit_text_recognition: ^0.14.0
+
+  #Core
   kartal: ^4.1.0
+  equatable: ^2.0.5
+
+  #Route
+  auto_route: ^9.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^6.0.0
   build_runner: ^2.4.13
+  auto_route_generator: ^9.0.0
 
 flutter:
   uses-material-design: true
