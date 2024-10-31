@@ -1,5 +1,4 @@
 import 'package:ai_quiz_checker/product/utils/border_radius_general.dart';
-import 'package:ai_quiz_checker/product/widget/page/page_padding.dart';
 import 'package:flutter/material.dart';
 
 /// CustomTextField is a custom text field widget that can be used to
@@ -13,6 +12,7 @@ final class CustomTextField extends StatelessWidget {
     this.validator,
     this.controller,
     this.onChanged,
+    this.icon,
   });
   final TextInputType? keyboardType;
   final String Function(String?)? validator;
@@ -20,30 +20,29 @@ final class CustomTextField extends StatelessWidget {
   final String labelText;
   final bool obscureText;
   final ValueChanged<String>? onChanged;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const PagePadding.all(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
-            onChanged: onChanged,
-            controller: controller,
-            obscureText: obscureText,
-            keyboardType: keyboardType,
-            validator: validator,
-            decoration: InputDecoration(
-              floatingLabelBehavior: FloatingLabelBehavior.auto,
-              labelText: labelText,
-              border: const OutlineInputBorder(
-                borderRadius: BorderRadiusGeneral.allLow(),
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          onChanged: onChanged,
+          controller: controller,
+          obscureText: obscureText,
+          keyboardType: keyboardType,
+          validator: validator,
+          decoration: InputDecoration(
+            suffixIcon: icon,
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            labelText: labelText,
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadiusGeneral.allLow(),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

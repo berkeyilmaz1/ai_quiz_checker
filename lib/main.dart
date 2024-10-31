@@ -1,4 +1,4 @@
-import 'package:ai_quiz_checker/features/questions/view/questions_view.dart';
+import 'package:ai_quiz_checker/features/add_qa/view/add_qa_view.dart';
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +10,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: ProductConstants.appName,
-      home: QuestionsView(),
+      home: AddQAView(),
     );
   }
 }
