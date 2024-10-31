@@ -6,6 +6,7 @@ import 'package:ai_quiz_checker/product/widget/custom_text_field.dart';
 import 'package:ai_quiz_checker/product/widget/page/page_padding.dart';
 import 'package:ai_quiz_checker/product/widget/widget_sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:kartal/kartal.dart';
 
 part '../widget/image_picker_button.dart';
 
@@ -22,35 +23,42 @@ class _AddQAViewState extends State<AddQAView> with AddQAMixin {
         centerTitle: true,
         title: Text(ProductConstants.addQuestion),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            selectedImage != null
-                ? Padding(
-                    padding: PagePadding.all(),
-                    child: Image.file(selectedImage!),
-                  )
-                : ImagePickerButton(
-                    onTap: showImageSourceDialog,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          selectedImage != null
+              ? Padding(
+                  padding: PagePadding.all(),
+                  child: GestureDetector(
+                    onTap: () => showZoomableImage(context),
+                    child: Container(
+                      height: 200,
+                      child: Image.file(selectedImage!),
+                    ),
                   ),
-            _TextField(),
-            _Buttons()
-          ],
-        ),
+                )
+              : ImagePickerButton(
+                  onTap: showImageSourceDialog,
+                ),
+          _TextField(controller: textController),
+          _Buttons(controller: textController)
+        ],
       ),
     );
   }
 }
 
 final class _TextField extends StatelessWidget {
-  const _TextField();
+  final TextEditingController controller;
+
+  const _TextField({required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: PagePadding.all(),
       child: CustomTextField(
+        controller: controller,
         keyboardType: TextInputType.text,
         labelText: ProductConstants.questionTitle,
       ),
@@ -59,16 +67,21 @@ final class _TextField extends StatelessWidget {
 }
 
 final class _Buttons extends StatelessWidget {
-  const _Buttons();
+  final TextEditingController controller;
+
+  const _Buttons({required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        CustomElevatedButton(
-          buttonText: ProductConstants.edit,
-          onPressed: () {},
+        ValueListenableBuilder(
+          valueListenable: controller,
+          builder: (context, value, child) => CustomElevatedButton(
+            buttonText: ProductConstants.edit,
+            onPressed: () {},
+          ).ext.toDisabled(disable: controller.text.isEmpty),
         ),
         CustomElevatedButton(
           buttonText: ProductConstants.save,

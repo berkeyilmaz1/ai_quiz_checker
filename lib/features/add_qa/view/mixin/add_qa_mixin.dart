@@ -2,19 +2,47 @@ import 'dart:io';
 
 import 'package:ai_quiz_checker/features/add_qa/view/add_qa_view.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 
 mixin AddQAMixin on State<AddQAView> {
   File? selectedImage;
   final ImagePicker _picker = ImagePicker();
+  final TextEditingController textController = TextEditingController();
 
   Future<void> pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
-    if (pickedFile != null) {
-      setState(() {
-        selectedImage = File(pickedFile.path);
-      });
-    }
+    if (pickedFile == null) return;
+    setState(() {
+      selectedImage = File(pickedFile.path);
+    });
+    await recognizeTextFromImage(File(pickedFile.path));
+  }
+
+  Future<void> recognizeTextFromImage(File image) async {
+    final inputImage = InputImage.fromFile(image);
+    final textRecognizer = TextRecognizer();
+    final RecognizedText recognizedText =
+        await textRecognizer.processImage(inputImage);
+
+    setState(() {
+      textController.text = recognizedText.text;
+    });
+
+    textRecognizer.close();
+  }
+
+  void showZoomableImage(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: InteractiveViewer(
+            child: Image.file(selectedImage!),
+          ),
+        );
+      },
+    );
   }
 
   void showImageSourceDialog() {
