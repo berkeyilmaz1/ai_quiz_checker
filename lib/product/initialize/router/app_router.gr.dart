@@ -23,7 +23,7 @@ class AddQARoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AddQAView();
+      return AddQAView();
     },
   );
 }
@@ -61,7 +61,7 @@ class QuestionsRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const QuestionsView();
+      return QuestionsView();
     },
   );
 }

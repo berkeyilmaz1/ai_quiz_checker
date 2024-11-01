@@ -1,10 +1,17 @@
+import 'package:ai_quiz_checker/features/questions/questions_store.dart';
 import 'package:ai_quiz_checker/product/initialize/router/app_router.dart';
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() async {
+void main() {
   runApp(
-    const MainApp(),
+    MultiProvider(
+      providers: [
+        Provider<QuestionsStore>(create: (_) => QuestionsStore()),
+      ],
+      child: MainApp(),
+    ),
   );
 }
 

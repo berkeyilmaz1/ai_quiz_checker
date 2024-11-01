@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ai_quiz_checker/features/add_qa/view/mixin/add_qa_mixin.dart';
+import 'package:ai_quiz_checker/features/questions/questions_store.dart';
 import 'package:ai_quiz_checker/product/utils/border_radius_general.dart';
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
 import 'package:ai_quiz_checker/product/widget/custom_elevated_button.dart';
@@ -9,6 +10,7 @@ import 'package:ai_quiz_checker/product/widget/page/page_padding.dart';
 import 'package:ai_quiz_checker/product/widget/widget_sizes.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 part '../widget/image_buttons.dart';
 part '../widget/image_picker_button.dart';
@@ -18,14 +20,14 @@ part '../widget/save_button.dart';
 
 @RoutePage()
 final class AddQAView extends StatefulWidget {
-  const AddQAView({super.key});
   @override
-  _AddQAViewState createState() => _AddQAViewState();
+  State<AddQAView> createState() => _AddQAViewState();
 }
 
 class _AddQAViewState extends State<AddQAView> with AddQAMixin {
   @override
   Widget build(BuildContext context) {
+    final questionsStore = Provider.of<QuestionsStore>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -62,8 +64,8 @@ class _AddQAViewState extends State<AddQAView> with AddQAMixin {
           ),
           SaveButton(
             controller: textController,
-            onPressed: () => showConfirmationDialog(context),
-          )
+            onPressed: () => showConfirmationDialog(context, questionsStore),
+          ),
         ],
       ),
     );
