@@ -1,4 +1,3 @@
-import 'package:ai_quiz_checker/features/add_qa/view/add_qa_view.dart';
 import 'package:ai_quiz_checker/features/questions/questions_store.dart';
 import 'package:ai_quiz_checker/product/initialize/router/app_router.dart';
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
@@ -20,7 +19,9 @@ final class QuestionsView extends StatelessWidget {
         title: const Text(ProductConstants.questionTitle),
         leading: IconButton(
             onPressed: () {
-              context.router.push(AddQARoute());
+              context.router.push(AddQARoute(
+                isQuestionPage: true,
+              ));
             },
             icon: Icon(Icons.add)),
       ),
@@ -32,12 +33,8 @@ final class QuestionsView extends StatelessWidget {
           if (questionsStore.questionList.isEmpty) {
             return CustomElevatedButton(
               buttonText: ProductConstants.addQuestion,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => AddQAView()),
-                );
-              },
+              onPressed: () =>
+                  context.router.push(AddQARoute(isQuestionPage: true)),
             );
           }
           return ListView.builder(
@@ -48,29 +45,28 @@ final class QuestionsView extends StatelessWidget {
                 title: Text(question.title ?? ''),
                 children: [
                   Padding(
-                    padding: PagePadding.all(),
-                    child: question.answers == null || question.answers!.isEmpty
-                        ? ElevatedButton(
-                            onPressed: () {},
-                            child: Text(ProductConstants.addAnswer))
-                        : ListView.builder(
-                            itemCount: question.answers?.length ?? 0,
+                      padding: PagePadding.all(),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            itemCount: question.answers.length ?? 0,
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder:
                                 (BuildContext context, int answerIndex) {
                               return ListTile(
                                 title: Text(
-                                  question.answers?[answerIndex].title ?? '',
-                                ),
-                                trailing: IconButton(
-                                  icon: Icon(Icons.delete),
-                                  onPressed: () {},
+                                  question.answers[answerIndex].title ?? '',
                                 ),
                               );
                             },
                           ),
-                  ),
+                          ElevatedButton(
+                              onPressed: () => context.router.push(AddQARoute(
+                                  isQuestionPage: false, question: question)),
+                              child: Text(ProductConstants.addAnswer)),
+                        ],
+                      )),
                 ],
               );
             },

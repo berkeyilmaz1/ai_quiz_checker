@@ -1,15 +1,16 @@
 import 'package:ai_quiz_checker/product/initialize/models/answer.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mobx/mobx.dart';
 
 final class Question extends Equatable {
-  const Question({
+  Question({
     this.id,
     this.title,
-    this.answers,
-  });
+    ObservableList<Answer>? answers,
+  }) : answers = answers ?? ObservableList<Answer>();
   final int? id;
   final String? title;
-  final List<Answer>? answers;
+  final ObservableList<Answer> answers;
 
   @override
   List<Object?> get props => [id, title, answers];
@@ -17,7 +18,7 @@ final class Question extends Equatable {
   Question copyWith({
     int? id,
     String? title,
-    List<Answer>? answers,
+    ObservableList<Answer>? answers,
   }) {
     return Question(
       id: id ?? this.id,
