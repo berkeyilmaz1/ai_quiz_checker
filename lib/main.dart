@@ -4,8 +4,8 @@ import 'package:ai_quiz_checker/product/initialize/main_app/main_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  ApplicationInitialize.initialize();
+Future<void> main() async {
+  await ApplicationInitialize.initialize();
   runApp(
     MultiProvider(
       providers: [

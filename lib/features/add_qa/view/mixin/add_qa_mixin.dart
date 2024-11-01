@@ -95,6 +95,8 @@ mixin AddQAMixin on State<AddQAView> {
     navigateToQuestionView();
   }
 
+  void writeToCache(List<Question> questionList) {}
+
   void showImageSourceDialog() {
     showModalBottomSheet(
       context: context,

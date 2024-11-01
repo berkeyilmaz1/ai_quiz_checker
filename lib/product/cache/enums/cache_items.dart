@@ -10,4 +10,7 @@ extension CacheItemsExtension on CacheItems {
 
   List<String>? get readStringList =>
       CacheSetup.instance.sharedPreferences.getStringList(name);
+
+  Future<bool> deleteStringList() =>
+      CacheSetup.instance.sharedPreferences.remove(name);
 }

@@ -7,18 +7,33 @@ final class Answer extends Equatable {
   final String? title;
 
   @override
-  // TODO: implement props
   List<Object?> get props => [id, title, questionId];
 
   Answer copyWith({
     int? id,
-    String? answer,
+    String? title,
     int? questionId,
   }) {
     return Answer(
       id: id ?? this.id,
-      title: answer ?? this.title,
+      title: title ?? this.title,
       questionId: questionId ?? this.questionId,
+    );
+  }
+
+  // JSON dönüşümü için toJson metodu
+  Map<String, dynamic> toJson() => {
+        'questionId': questionId,
+        'id': id,
+        'title': title,
+      };
+
+  // JSON’dan model oluşturmak için fromJson metodu
+  factory Answer.fromJson(Map<String, dynamic> json) {
+    return Answer(
+      questionId: json['questionId'] as int?,
+      id: json['id'] as int?,
+      title: json['title'] as String?,
     );
   }
 }

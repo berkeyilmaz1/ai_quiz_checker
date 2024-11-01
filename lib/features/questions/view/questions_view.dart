@@ -58,6 +58,9 @@ final class QuestionsView extends StatelessWidget {
                                 title: Text(
                                   question.answers[answerIndex].title ?? '',
                                 ),
+                                trailing: CustomElevatedButton(
+                                    buttonText: ProductConstants.solve,
+                                    onPressed: () {}),
                               );
                             },
                           ),

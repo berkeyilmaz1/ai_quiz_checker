@@ -1,8 +1,10 @@
+import 'package:ai_quiz_checker/features/questions/questions_store.dart';
 import 'package:ai_quiz_checker/product/initialize/router/app_router.dart';
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
 import 'package:ai_quiz_checker/product/widget/custom_elevated_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 final class HomeView extends StatefulWidget {
@@ -13,6 +15,13 @@ final class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    final questionsStore = Provider.of<QuestionsStore>(context, listen: false);
+    questionsStore.loadQuestions();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

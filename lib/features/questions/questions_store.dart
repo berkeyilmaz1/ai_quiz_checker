@@ -1,3 +1,4 @@
+import 'package:ai_quiz_checker/product/cache/cache_service.dart';
 import 'package:ai_quiz_checker/product/initialize/models/answer.dart';
 import 'package:ai_quiz_checker/product/initialize/models/question.dart';
 import 'package:mobx/mobx.dart';
@@ -13,10 +14,38 @@ abstract class _QuestionsStore with Store {
   @observable
   ObservableList<Question> questionList = ObservableList<Question>();
 
+  final CacheService _cacheService = CacheService();
+
+  @action
+  Future<void> loadQuestions() async {
+    isLoading = true;
+    final questions = await _cacheService.readQuestionsList();
+    if (questions != null) {
+      questionList.addAll(questions);
+    }
+    isLoading = false;
+  }
+
+  @action
+  Future<void> saveQuestions() async {
+    isLoading = true;
+    await _cacheService.writeQuestionsList(questionList.toList());
+    isLoading = false;
+  }
+
+  @action
+  Future<void> deleteQuestions() async {
+    isLoading = true;
+    await _cacheService.deleteQuestionsList();
+    questionList.clear(); // Local listeden de sil
+    isLoading = false;
+  }
+
   @action
   void addQuestion(Question question) {
     isLoading = true;
     questionList.add(question);
+    saveQuestions();
     isLoading = false;
   }
 
@@ -24,17 +53,9 @@ abstract class _QuestionsStore with Store {
   void removeQuestion(Question question) {
     isLoading = true;
     questionList.remove(question);
+    saveQuestions();
     isLoading = false;
   }
-
-  // @action
-  // void updateQuestion(Question question) {
-  //   isLoading = true;
-  //   final index =
-  //       questionList.indexWhere((element) => element.id == question.id);
-  //   questionList[index] = question;
-  //   isLoading = false;
-  // }
 
   @action
   void addAnswer(Answer answer, Question question) {
@@ -42,8 +63,7 @@ abstract class _QuestionsStore with Store {
     final index =
         questionList.indexWhere((element) => element.title == question.title);
     questionList[index].answers.add(answer);
-
-    print(questionList[index].answers);
+    saveQuestions();
     isLoading = false;
   }
 }
