@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:ai_quiz_checker/features/add_qa/view/mixin/add_qa_mixin.dart';
 import 'package:ai_quiz_checker/features/questions/questions_store.dart';
+import 'package:ai_quiz_checker/product/initialize/models/question.dart';
 import 'package:ai_quiz_checker/product/utils/border_radius_general.dart';
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
 import 'package:ai_quiz_checker/product/widget/custom_elevated_button.dart';
@@ -20,6 +21,9 @@ part '../widget/save_button.dart';
 
 @RoutePage()
 final class AddQAView extends StatefulWidget {
+  const AddQAView({super.key, required this.isQuestionPage, this.question});
+  final bool isQuestionPage;
+  final Question? question;
   @override
   State<AddQAView> createState() => _AddQAViewState();
 }
@@ -31,7 +35,9 @@ class _AddQAViewState extends State<AddQAView> with AddQAMixin {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(ProductConstants.addQuestion),
+        title: Text(widget.isQuestionPage
+            ? ProductConstants.addQuestion
+            : ProductConstants.addAnswer),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -59,6 +65,9 @@ class _AddQAViewState extends State<AddQAView> with AddQAMixin {
             child: Divider(),
           ),
           QuestionTextfield(
+            labelText: widget.isQuestionPage
+                ? ProductConstants.questionTitle
+                : ProductConstants.answerTitle,
             controller: textController,
             onPressed: () => clearTextField(),
           ),

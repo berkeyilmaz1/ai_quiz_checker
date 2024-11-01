@@ -5,14 +5,16 @@ final class ConfirmationDialog extends StatelessWidget {
   const ConfirmationDialog({
     super.key,
     required this.onYes,
+    required this.content,
   });
   final VoidCallback onYes;
+  final Widget content;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(ProductConstants.areYouSure),
-      content: Text(ProductConstants.areYouSureContent),
+      content: content,
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),

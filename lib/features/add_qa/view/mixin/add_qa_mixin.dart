@@ -5,7 +5,9 @@ import 'package:ai_quiz_checker/features/add_qa/widget/confirmation_dialog.dart'
 import 'package:ai_quiz_checker/features/add_qa/widget/image_picker_bottom_sheet.dart';
 import 'package:ai_quiz_checker/features/questions/questions_store.dart';
 import 'package:ai_quiz_checker/features/questions/view/questions_view.dart';
+import 'package:ai_quiz_checker/product/initialize/models/answer.dart';
 import 'package:ai_quiz_checker/product/initialize/models/question.dart';
+import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
@@ -63,18 +65,34 @@ mixin AddQAMixin on State<AddQAView> {
     return showDialog(
       context: context,
       builder: (context) => ConfirmationDialog(
-        onYes: () {
-          final newQuestion = Question(title: textController.text);
-          questionsStore.addQuestion(newQuestion);
-          textController.clear();
-          Navigator.pop(context);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => QuestionsView()),
-          );
-        },
+        content: widget.isQuestionPage
+            ? Text(ProductConstants.areYouSureQuestionContent)
+            : Text(ProductConstants.areYouSureAnswerContent),
+        onYes: widget.isQuestionPage
+            ? () => addQuestion(questionsStore)
+            : () => addAnswer(questionsStore),
       ),
     );
+  }
+
+  void addQuestion(QuestionsStore questionsStore) {
+    final newQuestion = Question(title: textController.text);
+    questionsStore.addQuestion(newQuestion);
+    textController.clear();
+    isImageSelected.value = false;
+    selectedImage = null;
+    navigateToQuestionView();
+  }
+
+  void addAnswer(QuestionsStore questionsStore) {
+    final newAnswer = Answer(title: textController.text);
+    if (widget.question == null) return;
+    questionsStore.addAnswer(newAnswer, widget.question!);
+
+    textController.clear();
+    isImageSelected.value = false;
+
+    navigateToQuestionView();
   }
 
   void showImageSourceDialog() {
@@ -95,6 +113,14 @@ mixin AddQAMixin on State<AddQAView> {
           },
         );
       },
+    );
+  }
+
+  void navigateToQuestionView() {
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => QuestionsView()),
     );
   }
 

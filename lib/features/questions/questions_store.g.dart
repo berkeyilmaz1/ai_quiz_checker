@@ -67,6 +67,17 @@ mixin _$QuestionsStore on _QuestionsStore, Store {
   }
 
   @override
+  void addAnswer(Answer answer, Question question) {
+    final _$actionInfo = _$_QuestionsStoreActionController.startAction(
+        name: '_QuestionsStore.addAnswer');
+    try {
+      return super.addAnswer(answer, question);
+    } finally {
+      _$_QuestionsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isLoading: ${isLoading},
