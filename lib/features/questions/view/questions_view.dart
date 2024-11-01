@@ -14,7 +14,6 @@ final class QuestionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final questionsStore = Provider.of<QuestionsStore>(context);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

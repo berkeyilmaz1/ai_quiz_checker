@@ -10,4 +10,7 @@ final class ProductConstants {
       'Are you sure you want to save this question?';
   static const no = 'No';
   static const yes = 'Yes';
+  static const selectImageSource = 'Select Image Source';
+  static const camera= 'Camera';
+  static const gallery = 'Gallery';
 }
