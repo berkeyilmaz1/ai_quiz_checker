@@ -20,14 +20,14 @@ mixin QuestionsViewMixin on State<QuestionsView> {
     final resources = response['resources'];
     if (!mounted) return;
     await navigateToResultView(
-      accuracyRate.toString(),
+      double.tryParse(accuracyRate.toString()) ?? 0.0,
       bestAnswer.toString(),
       resources.toString(),
     );
   }
 
   Future<void> navigateToResultView(
-    String accuracyRate,
+    double accuracyRate,
     String bestAnswer,
     String resources,
   ) async {

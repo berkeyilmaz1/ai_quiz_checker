@@ -103,7 +103,7 @@ class QuestionsRoute extends PageRouteInfo<void> {
 /// [ResultView]
 class ResultRoute extends PageRouteInfo<ResultRouteArgs> {
   ResultRoute({
-    required String accuracyRate,
+    required double accuracyRate,
     required String bestAnswer,
     required String resources,
     Key? key,
@@ -143,7 +143,7 @@ class ResultRouteArgs {
     this.key,
   });
 
-  final String accuracyRate;
+  final double accuracyRate;
 
   final String bestAnswer;
 
