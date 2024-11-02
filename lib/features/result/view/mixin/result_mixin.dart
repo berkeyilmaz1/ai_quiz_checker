@@ -1,6 +1,7 @@
 import 'package:ai_quiz_checker/features/result/view/result_view.dart';
 import 'package:ai_quiz_checker/features/result/widgets/best_answer_dialog.dart';
 import 'package:ai_quiz_checker/features/result/widgets/result_alert_dialog.dart';
+import 'package:ai_quiz_checker/product/initialize/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -25,8 +26,8 @@ mixin ResultMixin on State<ResultView> {
     return Colors.red;
   }
 
-  void navigateToQuestionView() {
-    context.router.maybePop();
+  Future<void> navigateToQuestionView() async {
+    await context.router.push(const QuestionsRoute());
   }
 
   void showBestAnswer() {
