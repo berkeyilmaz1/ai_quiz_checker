@@ -1,5 +1,6 @@
 import 'package:ai_quiz_checker/features/result/view/result_view.dart';
-import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
+import 'package:ai_quiz_checker/features/result/widgets/best_answer_dialog.dart';
+import 'package:ai_quiz_checker/features/result/widgets/result_alert_dialog.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -32,27 +33,8 @@ mixin ResultMixin on State<ResultView> {
     showDialog<AlertDialog>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(ProductConstants.bestAnswer),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(widget.bestAnswer),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text(
-                ProductConstants.close,
-                style: TextStyle(
-                  color: Color(0xFF4765ff),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+        return BestAnswerDialog(
+          bestAnswer: widget.bestAnswer,
         );
       },
     );
@@ -62,30 +44,7 @@ mixin ResultMixin on State<ResultView> {
     showDialog<AlertDialog>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(ProductConstants.resources),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(widget.resources),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text(
-                ProductConstants.close,
-                style: TextStyle(
-                  color: Color(0xFF4765ff),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
+        return ResultAlertDialog(resources: widget.resources);
       },
     );
   }

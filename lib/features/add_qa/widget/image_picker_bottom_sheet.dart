@@ -1,12 +1,12 @@
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
-import 'package:ai_quiz_checker/product/widget/page/page_padding.dart';
+import 'package:ai_quiz_checker/product/widgets/page/page_padding.dart';
 import 'package:flutter/material.dart';
 
 final class ImagePickerBottomSheet extends StatelessWidget {
   const ImagePickerBottomSheet({
-    super.key,
     required this.onCameraTap,
     required this.onGalleryTap,
+    super.key,
   });
   final VoidCallback onCameraTap;
   final VoidCallback onGalleryTap;
@@ -14,21 +14,21 @@ final class ImagePickerBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: PagePadding.all(),
+      padding: const PagePadding.all(),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          const Text(
             ProductConstants.selectImageSource,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
                 onTap: onCameraTap,
-                child: Column(
+                child: const Column(
                   children: [
                     Icon(Icons.camera_alt, size: 30),
                     SizedBox(height: 5),
@@ -38,7 +38,7 @@ final class ImagePickerBottomSheet extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: onGalleryTap,
-                child: Column(
+                child: const Column(
                   children: [
                     Icon(Icons.photo_library, size: 30),
                     SizedBox(height: 5),

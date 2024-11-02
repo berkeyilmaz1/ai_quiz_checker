@@ -1,7 +1,7 @@
 import 'package:ai_quiz_checker/features/questions/questions_store.dart';
 import 'package:ai_quiz_checker/product/initialize/router/app_router.dart';
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
-import 'package:ai_quiz_checker/product/widget/custom_elevated_button.dart';
+import 'package:ai_quiz_checker/product/widgets/custom_elevated_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
