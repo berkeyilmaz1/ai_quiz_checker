@@ -41,6 +41,30 @@ mixin _$QuestionsStore on _QuestionsStore, Store {
     });
   }
 
+  late final _$loadQuestionsAsyncAction =
+      AsyncAction('_QuestionsStore.loadQuestions', context: context);
+
+  @override
+  Future<void> loadQuestions() {
+    return _$loadQuestionsAsyncAction.run(() => super.loadQuestions());
+  }
+
+  late final _$saveQuestionsAsyncAction =
+      AsyncAction('_QuestionsStore.saveQuestions', context: context);
+
+  @override
+  Future<void> saveQuestions() {
+    return _$saveQuestionsAsyncAction.run(() => super.saveQuestions());
+  }
+
+  late final _$deleteQuestionsAsyncAction =
+      AsyncAction('_QuestionsStore.deleteQuestions', context: context);
+
+  @override
+  Future<void> deleteQuestions() {
+    return _$deleteQuestionsAsyncAction.run(() => super.deleteQuestions());
+  }
+
   late final _$_QuestionsStoreActionController =
       ActionController(name: '_QuestionsStore', context: context);
 
