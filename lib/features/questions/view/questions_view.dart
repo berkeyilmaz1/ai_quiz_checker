@@ -22,19 +22,20 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
   Widget build(BuildContext context) {
     final questionsStore = Provider.of<QuestionsStore>(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.router.push(
+            AddQARoute(
+              isQuestionPage: true,
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text(ProductConstants.questionTitle),
-        leading: IconButton(
-          onPressed: () {
-            context.router.push(
-              AddQARoute(
-                isQuestionPage: true,
-              ),
-            );
-          },
-          icon: const Icon(Icons.add),
-        ),
       ),
       body: Observer(
         builder: (_) {
@@ -67,7 +68,8 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
                 onDismissed: (direction) {
                   // Silme işlemi
                   questionsStore.removeQuestion(
-                      question); // Silme işlemi için gerekli fonksiyon
+                    question,
+                  ); // Silme işlemi için gerekli fonksiyon
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('${question.title} silindi'),
