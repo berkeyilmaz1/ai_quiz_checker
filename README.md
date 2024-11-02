@@ -3,10 +3,10 @@
 
 We developed an AI application for the BTK HACKATHON. This app can efficiently solve quiz questions, aiming to assist teachers in grading quizzes and managing student responses.
 
-## Images
+## Application
  
 
-
+<img src="https://github.com/user-attachments/assets/e6f2d688-529c-404a-bce8-60f7f333143a" alt="btkgif" height="400"/>
 
 
 
