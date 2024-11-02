@@ -31,9 +31,9 @@ final class ProductConstants {
   static const save = 'Kaydet';
   static const areYouSure = 'Emin misin?';
   static const areYouSureQuestionContent =
-      'Bu soruyu kaydetmek istediğinize emin misin?';
+      'Bu soruyu kaydetmek istediğinize emin misiniz?';
   static const areYouSureAnswerContent =
-      'Bu cevabı kaydetmek istediğinize emin misin?';
+      'Bu cevabı kaydetmek istediğinize emin misiniz?';
   static const selectImageSource = 'Görsel Kaynağını Seçin';
   static const no = 'Hayır';
   static const yes = 'Evet';
@@ -43,5 +43,4 @@ final class ProductConstants {
   static const resources = 'Kaynaklar';
   static const close = 'Kapat';
   static const bestAnswer = 'En İyi Cevap';
-  
 }

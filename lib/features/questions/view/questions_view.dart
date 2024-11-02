@@ -83,25 +83,36 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder:
                                 (BuildContext context, int answerIndex) {
-                              return ListTile(
-                                title: Text(
-                                  question.answers[answerIndex].title ?? '',
-                                ),
-                                trailing: CustomElevatedButton(
-                                  buttonText: ProductConstants.solve,
-                                  onPressed: () async {
-                                    await solveOnPressed(
-                                      question,
-                                      answerIndex,
-                                    ).makeWithLoadingDialog(
-                                      context: context,
-                                    );
-                                  },
-                                ),
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title: Text(
+                                      question.answers[answerIndex].title ?? '',
+                                    ),
+                                    trailing: CustomTextButton(
+                                      buttonTextStyle: const TextStyle(
+                                        color: Color(0xFF4765ff),
+                                      ),
+                                      buttonText: ProductConstants.solve,
+                                      onPressed: () async {
+                                        await solveOnPressed(
+                                          question,
+                                          answerIndex,
+                                        ).makeWithLoadingDialog(
+                                          context: context,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  const Divider(),
+                                ],
                               );
                             },
                           ),
-                          CustomElevatedButton(
+                          CustomTextButton(
+                            buttonTextStyle: const TextStyle(
+                              color: Color(0xFF4765ff),
+                            ),
                             buttonText: ProductConstants.addAnswer,
                             onPressed: () => context.router.push(
                               AddQARoute(
