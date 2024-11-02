@@ -34,6 +34,17 @@ final class CustomTextField extends StatelessWidget {
           keyboardType: keyboardType,
           validator: validator,
           decoration: InputDecoration(
+            floatingLabelStyle: const TextStyle(
+              color: Color(0xFF4765ff),
+            ),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color(0xFF4765ff),
+              ),
+            ),
             suffixIcon: icon,
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             labelText: labelText,

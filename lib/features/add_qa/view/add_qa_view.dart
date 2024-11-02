@@ -40,6 +40,7 @@ class _AddQAViewState extends State<AddQAView> with AddQAMixin {
           widget.isQuestionPage
               ? ProductConstants.addQuestion
               : ProductConstants.addAnswer,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(

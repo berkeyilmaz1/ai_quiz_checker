@@ -43,4 +43,5 @@ final class ProductConstants {
   static const resources = 'Kaynaklar';
   static const close = 'Kapat';
   static const bestAnswer = 'En İyi Cevap';
+  
 }

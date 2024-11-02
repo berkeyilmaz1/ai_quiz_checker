@@ -35,7 +35,10 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: const Text(ProductConstants.questionTitle),
+        title: const Text(
+          ProductConstants.questionTitle,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: Observer(
         builder: (_) {
@@ -43,10 +46,13 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
             return const Center(child: CircularProgressIndicator());
           }
           if (questionsStore.questionList.isEmpty) {
-            return CustomElevatedButton(
-              buttonText: ProductConstants.addQuestion,
-              onPressed: () =>
-                  context.router.push(AddQARoute(isQuestionPage: true)),
+            return Center(
+              child: CustomElevatedButton(
+                buttonText: ProductConstants.addQuestion,
+                buttonTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+                onPressed: () =>
+                    context.router.push(AddQARoute(isQuestionPage: true)),
+              ),
             );
           }
           return ListView.builder(

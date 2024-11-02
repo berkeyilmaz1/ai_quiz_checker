@@ -43,7 +43,13 @@ mixin ResultMixin on State<ResultView> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text(ProductConstants.close),
+              child: const Text(
+                ProductConstants.close,
+                style: TextStyle(
+                  color: Color(0xFF4765ff),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],
@@ -67,7 +73,13 @@ mixin ResultMixin on State<ResultView> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text(ProductConstants.close),
+              child: const Text(
+                ProductConstants.close,
+                style: TextStyle(
+                  color: Color(0xFF4765ff),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
