@@ -17,4 +17,5 @@ final class ProductConstants {
   static const camera = 'Camera';
   static const gallery = 'Gallery';
   static const solve = 'Solve';
+  static const resources = 'Resources';
 }
