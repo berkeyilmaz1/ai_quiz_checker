@@ -52,45 +52,69 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
             itemCount: questionsStore.questionList.length,
             itemBuilder: (context, index) {
               final question = questionsStore.questionList[index];
-              return ExpansionTile(
-                title: Text(question.title ?? ''),
-                children: [
-                  Padding(
-                    padding: const PagePadding.all(),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                          itemCount: question.answers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int answerIndex) {
-                            return ListTile(
-                              title: Text(
-                                question.answers[answerIndex].title ?? '',
-                              ),
-                              trailing: CustomElevatedButton(
-                                buttonText: ProductConstants.solve,
-                                onPressed: () => solveOnPressed(
-                                  question,
-                                  answerIndex,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        ElevatedButton(
-                          onPressed: () => context.router.push(
-                            AddQARoute(
-                              isQuestionPage: false,
-                              question: question,
-                            ),
-                          ),
-                          child: const Text(ProductConstants.addAnswer),
-                        ),
-                      ],
-                    ),
+              return Dismissible(
+                key: Key(question.title.toString()),
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerLeft,
+                  padding: const PagePadding.horizontalSymmetric(),
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.white,
                   ),
-                ],
+                ),
+                direction: DismissDirection.startToEnd,
+                onDismissed: (direction) {
+                  // Silme işlemi
+                  questionsStore.removeQuestion(
+                      question); // Silme işlemi için gerekli fonksiyon
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${question.title} silindi'),
+                    ),
+                  );
+                },
+                child: ExpansionTile(
+                  title: Text(question.title ?? ''),
+                  children: [
+                    Padding(
+                      padding: const PagePadding.all(),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            itemCount: question.answers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder:
+                                (BuildContext context, int answerIndex) {
+                              return ListTile(
+                                title: Text(
+                                  question.answers[answerIndex].title ?? '',
+                                ),
+                                trailing: CustomElevatedButton(
+                                  buttonText: ProductConstants.solve,
+                                  onPressed: () => solveOnPressed(
+                                    question,
+                                    answerIndex,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          ElevatedButton(
+                            onPressed: () => context.router.push(
+                              AddQARoute(
+                                isQuestionPage: false,
+                                question: question,
+                              ),
+                            ),
+                            child: const Text(ProductConstants.addAnswer),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
           );
