@@ -80,6 +80,11 @@ class _ResultViewState extends State<ResultView>
                   ),
                 ),
                 CustomElevatedButton(
+                  backgroundColor: Colors.white,
+                  buttonTextStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                   buttonText: ProductConstants.resources,
                   onPressed: showResourcesDialog,
                 ),
@@ -90,6 +95,4 @@ class _ResultViewState extends State<ResultView>
       ),
     );
   }
-
- 
 }

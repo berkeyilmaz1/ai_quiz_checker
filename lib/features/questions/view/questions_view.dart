@@ -103,14 +103,14 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
                               );
                             },
                           ),
-                          ElevatedButton(
+                          CustomElevatedButton(
+                            buttonText: ProductConstants.addAnswer,
                             onPressed: () => context.router.push(
                               AddQARoute(
                                 isQuestionPage: false,
                                 question: question,
                               ),
                             ),
-                            child: const Text(ProductConstants.addAnswer),
                           ),
                         ],
                       ),
