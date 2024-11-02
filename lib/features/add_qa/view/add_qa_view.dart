@@ -11,6 +11,7 @@ import 'package:ai_quiz_checker/product/widget/page/page_padding.dart';
 import 'package:ai_quiz_checker/product/widget/widget_sizes.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:kartal/kartal.dart';
 import 'package:provider/provider.dart';
 
 part '../widget/image_buttons.dart';
@@ -21,7 +22,7 @@ part '../widget/save_button.dart';
 
 @RoutePage()
 final class AddQAView extends StatefulWidget {
-  const AddQAView({super.key, required this.isQuestionPage, this.question});
+  const AddQAView({required this.isQuestionPage, super.key, this.question});
   final bool isQuestionPage;
   final Question? question;
   @override
@@ -35,9 +36,11 @@ class _AddQAViewState extends State<AddQAView> with AddQAMixin {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(widget.isQuestionPage
-            ? ProductConstants.addQuestion
-            : ProductConstants.addAnswer),
+        title: Text(
+          widget.isQuestionPage
+              ? ProductConstants.addQuestion
+              : ProductConstants.addAnswer,
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -48,9 +51,9 @@ class _AddQAViewState extends State<AddQAView> with AddQAMixin {
                 ? ImageButtons(
                     refreshOnPressed: () =>
                         recognizeTextFromImage(selectedImage!),
-                    cameraOnPressed: () => showImageSourceDialog(),
+                    cameraOnPressed: showImageSourceDialog,
                   )
-                : SizedBox.shrink(),
+                : const SizedBox.shrink(),
           ),
           selectedImage != null
               ? ImageView(
@@ -60,7 +63,7 @@ class _AddQAViewState extends State<AddQAView> with AddQAMixin {
               : ImagePickerButton(
                   onTap: showImageSourceDialog,
                 ),
-          Padding(
+          const Padding(
             padding: PagePadding.all(),
             child: Divider(),
           ),
@@ -69,11 +72,14 @@ class _AddQAViewState extends State<AddQAView> with AddQAMixin {
                 ? ProductConstants.questionTitle
                 : ProductConstants.answerTitle,
             controller: textController,
-            onPressed: () => clearTextField(),
+            onPressed: clearTextField,
           ),
-          SaveButton(
-            controller: textController,
-            onPressed: () => showConfirmationDialog(context, questionsStore),
+          ValueListenableBuilder(
+            valueListenable: textController,
+            builder: (context, value, child) => SaveButton(
+              controller: textController,
+              onPressed: () => showConfirmationDialog(context, questionsStore),
+            ).ext.toDisabled(disable: textController.text.isEmpty),
           ),
         ],
       ),
