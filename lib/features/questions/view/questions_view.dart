@@ -2,8 +2,9 @@ import 'package:ai_quiz_checker/features/questions/questions_store.dart';
 import 'package:ai_quiz_checker/features/questions/view/mixin/questions_view_mixin.dart';
 import 'package:ai_quiz_checker/product/initialize/router/app_router.dart';
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
-import 'package:ai_quiz_checker/product/widget/custom_elevated_button.dart';
-import 'package:ai_quiz_checker/product/widget/page/page_padding.dart';
+import 'package:ai_quiz_checker/product/widgets/custom_elevated_button.dart';
+import 'package:ai_quiz_checker/product/widgets/future_extension.dart';
+import 'package:ai_quiz_checker/product/widgets/page/page_padding.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -61,26 +62,13 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
               final question = questionsStore.questionList[index];
               return Dismissible(
                 key: Key(question.title.toString()),
-                background: Container(
-                  color: Colors.red,
-                  alignment: Alignment.centerLeft,
-                  padding: const PagePadding.horizontalSymmetric(),
-                  child: const Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
-                ),
+                background: const _DeleteContainer(),
                 direction: DismissDirection.startToEnd,
                 onDismissed: (direction) {
-                  // Silme işlemi
                   questionsStore.removeQuestion(
                     question,
-                  ); // Silme işlemi için gerekli fonksiyon
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('${question.title} silindi'),
-                    ),
                   );
+                  showNotification(question);
                 },
                 child: ExpansionTile(
                   title: Text(question.title ?? ''),
@@ -101,10 +89,14 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
                                 ),
                                 trailing: CustomElevatedButton(
                                   buttonText: ProductConstants.solve,
-                                  onPressed: () => solveOnPressed(
-                                    question,
-                                    answerIndex,
-                                  ),
+                                  onPressed: () async {
+                                    await solveOnPressed(
+                                      question,
+                                      answerIndex,
+                                    ).makeWithLoadingDialog(
+                                      context: context,
+                                    );
+                                  },
                                 ),
                               );
                             },
@@ -127,6 +119,23 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+final class _DeleteContainer extends StatelessWidget {
+  const _DeleteContainer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.red,
+      alignment: Alignment.centerLeft,
+      padding: const PagePadding.horizontalSymmetric(),
+      child: const Icon(
+        Icons.delete,
+        color: Colors.white,
       ),
     );
   }
