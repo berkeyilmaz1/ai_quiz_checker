@@ -1,4 +1,5 @@
 import 'package:ai_quiz_checker/features/questions/questions_store.dart';
+import 'package:ai_quiz_checker/features/questions/view/mixin/questions_view_mixin.dart';
 import 'package:ai_quiz_checker/product/initialize/router/app_router.dart';
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
 import 'package:ai_quiz_checker/product/widget/custom_elevated_button.dart';
@@ -9,7 +10,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
-final class QuestionsView extends StatelessWidget {
+final class QuestionsView extends StatefulWidget {
+  const QuestionsView({super.key});
+
+  @override
+  State<QuestionsView> createState() => _QuestionsViewState();
+}
+
+class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
   @override
   Widget build(BuildContext context) {
     final questionsStore = Provider.of<QuestionsStore>(context);
@@ -18,17 +26,20 @@ final class QuestionsView extends StatelessWidget {
         centerTitle: true,
         title: const Text(ProductConstants.questionTitle),
         leading: IconButton(
-            onPressed: () {
-              context.router.push(AddQARoute(
+          onPressed: () {
+            context.router.push(
+              AddQARoute(
                 isQuestionPage: true,
-              ));
-            },
-            icon: Icon(Icons.add)),
+              ),
+            );
+          },
+          icon: const Icon(Icons.add),
+        ),
       ),
       body: Observer(
         builder: (_) {
           if (questionsStore.isLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (questionsStore.questionList.isEmpty) {
             return CustomElevatedButton(
@@ -45,31 +56,40 @@ final class QuestionsView extends StatelessWidget {
                 title: Text(question.title ?? ''),
                 children: [
                   Padding(
-                      padding: PagePadding.all(),
-                      child: Column(
-                        children: [
-                          ListView.builder(
-                            itemCount: question.answers.length ?? 0,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder:
-                                (BuildContext context, int answerIndex) {
-                              return ListTile(
-                                title: Text(
-                                  question.answers[answerIndex].title ?? '',
+                    padding: const PagePadding.all(),
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                          itemCount: question.answers.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int answerIndex) {
+                            return ListTile(
+                              title: Text(
+                                question.answers[answerIndex].title ?? '',
+                              ),
+                              trailing: CustomElevatedButton(
+                                buttonText: ProductConstants.solve,
+                                onPressed: () => solveOnPressed(
+                                  question,
+                                  answerIndex,
                                 ),
-                                trailing: CustomElevatedButton(
-                                    buttonText: ProductConstants.solve,
-                                    onPressed: () {}),
-                              );
-                            },
+                              ),
+                            );
+                          },
+                        ),
+                        ElevatedButton(
+                          onPressed: () => context.router.push(
+                            AddQARoute(
+                              isQuestionPage: false,
+                              question: question,
+                            ),
                           ),
-                          ElevatedButton(
-                              onPressed: () => context.router.push(AddQARoute(
-                                  isQuestionPage: false, question: question)),
-                              child: Text(ProductConstants.addAnswer)),
-                        ],
-                      )),
+                          child: const Text(ProductConstants.addAnswer),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               );
             },

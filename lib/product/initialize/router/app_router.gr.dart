@@ -94,7 +94,65 @@ class QuestionsRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return QuestionsView();
+      return const QuestionsView();
     },
   );
+}
+
+/// generated route for
+/// [ResultView]
+class ResultRoute extends PageRouteInfo<ResultRouteArgs> {
+  ResultRoute({
+    required String accuracyRate,
+    required String bestAnswer,
+    required String resources,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ResultRoute.name,
+          args: ResultRouteArgs(
+            accuracyRate: accuracyRate,
+            bestAnswer: bestAnswer,
+            resources: resources,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ResultRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ResultRouteArgs>();
+      return ResultView(
+        accuracyRate: args.accuracyRate,
+        bestAnswer: args.bestAnswer,
+        resources: args.resources,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class ResultRouteArgs {
+  const ResultRouteArgs({
+    required this.accuracyRate,
+    required this.bestAnswer,
+    required this.resources,
+    this.key,
+  });
+
+  final String accuracyRate;
+
+  final String bestAnswer;
+
+  final String resources;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ResultRouteArgs{accuracyRate: $accuracyRate, bestAnswer: $bestAnswer, resources: $resources, key: $key}';
+  }
 }
