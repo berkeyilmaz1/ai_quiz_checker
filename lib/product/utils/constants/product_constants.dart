@@ -34,6 +34,7 @@ final class ProductConstants {
       'Bu soruyu kaydetmek istediğinize emin misin?';
   static const areYouSureAnswerContent =
       'Bu cevabı kaydetmek istediğinize emin misin?';
+  static const selectImageSource = 'Görsel Kaynağını Seçin';
   static const no = 'Hayır';
   static const yes = 'Evet';
   static const camera = 'Kamera';
