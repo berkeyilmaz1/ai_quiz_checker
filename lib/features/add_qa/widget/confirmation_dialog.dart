@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 final class ConfirmationDialog extends StatelessWidget {
   const ConfirmationDialog({
-    super.key,
     required this.onYes,
     required this.content,
+    super.key,
   });
   final VoidCallback onYes;
   final Widget content;
@@ -13,16 +13,28 @@ final class ConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(ProductConstants.areYouSure),
+      title: const Text(ProductConstants.areYouSure),
       content: content,
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(ProductConstants.no),
+          child: const Text(
+            ProductConstants.no,
+            style: TextStyle(
+              color: Color(0xFF4765ff),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         TextButton(
           onPressed: onYes,
-          child: Text(ProductConstants.yes),
+          child: const Text(
+            ProductConstants.yes,
+            style: TextStyle(
+              color: Color(0xFF4765ff),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ],
     );

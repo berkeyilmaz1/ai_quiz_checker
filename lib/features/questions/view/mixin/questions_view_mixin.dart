@@ -26,6 +26,14 @@ mixin QuestionsViewMixin on State<QuestionsView> {
     );
   }
 
+  void showNotification(Question question) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${question.title} silindi'),
+      ),
+    );
+  }
+
   Future<void> navigateToResultView(
     double accuracyRate,
     String bestAnswer,

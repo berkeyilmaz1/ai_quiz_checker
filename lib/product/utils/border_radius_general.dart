@@ -1,4 +1,4 @@
-import 'package:ai_quiz_checker/product/widget/widget_sizes.dart';
+import 'package:ai_quiz_checker/product/widgets/widget_sizes.dart';
 import 'package:flutter/material.dart';
 
 final class BorderRadiusGeneral extends BorderRadius {

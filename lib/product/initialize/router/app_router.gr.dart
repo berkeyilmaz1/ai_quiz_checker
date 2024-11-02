@@ -13,15 +13,15 @@ part of 'app_router.dart';
 /// [AddQAView]
 class AddQARoute extends PageRouteInfo<AddQARouteArgs> {
   AddQARoute({
-    Key? key,
     required bool isQuestionPage,
+    Key? key,
     Question? question,
     List<PageRouteInfo>? children,
   }) : super(
           AddQARoute.name,
           args: AddQARouteArgs(
-            key: key,
             isQuestionPage: isQuestionPage,
+            key: key,
             question: question,
           ),
           initialChildren: children,
@@ -34,8 +34,8 @@ class AddQARoute extends PageRouteInfo<AddQARouteArgs> {
     builder: (data) {
       final args = data.argsAs<AddQARouteArgs>();
       return AddQAView(
-        key: args.key,
         isQuestionPage: args.isQuestionPage,
+        key: args.key,
         question: args.question,
       );
     },
@@ -44,20 +44,20 @@ class AddQARoute extends PageRouteInfo<AddQARouteArgs> {
 
 class AddQARouteArgs {
   const AddQARouteArgs({
-    this.key,
     required this.isQuestionPage,
+    this.key,
     this.question,
   });
 
-  final Key? key;
-
   final bool isQuestionPage;
+
+  final Key? key;
 
   final Question? question;
 
   @override
   String toString() {
-    return 'AddQARouteArgs{key: $key, isQuestionPage: $isQuestionPage, question: $question}';
+    return 'AddQARouteArgs{isQuestionPage: $isQuestionPage, key: $key, question: $question}';
   }
 }
 

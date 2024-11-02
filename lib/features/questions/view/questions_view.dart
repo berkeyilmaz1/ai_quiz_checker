@@ -2,8 +2,9 @@ import 'package:ai_quiz_checker/features/questions/questions_store.dart';
 import 'package:ai_quiz_checker/features/questions/view/mixin/questions_view_mixin.dart';
 import 'package:ai_quiz_checker/product/initialize/router/app_router.dart';
 import 'package:ai_quiz_checker/product/utils/constants/product_constants.dart';
-import 'package:ai_quiz_checker/product/widget/custom_elevated_button.dart';
-import 'package:ai_quiz_checker/product/widget/page/page_padding.dart';
+import 'package:ai_quiz_checker/product/widgets/custom_elevated_button.dart';
+import 'package:ai_quiz_checker/product/widgets/future_extension.dart';
+import 'package:ai_quiz_checker/product/widgets/page/page_padding.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -22,18 +23,22 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
   Widget build(BuildContext context) {
     final questionsStore = Provider.of<QuestionsStore>(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.router.push(
+            AddQARoute(
+              isQuestionPage: true,
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
-        title: const Text(ProductConstants.questionTitle),
-        leading: IconButton(
-          onPressed: () {
-            context.router.push(
-              AddQARoute(
-                isQuestionPage: true,
-              ),
-            );
-          },
-          icon: const Icon(Icons.add),
+        title: const Text(
+          ProductConstants.questionTitle,
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: Observer(
@@ -42,59 +47,95 @@ class _QuestionsViewState extends State<QuestionsView> with QuestionsViewMixin {
             return const Center(child: CircularProgressIndicator());
           }
           if (questionsStore.questionList.isEmpty) {
-            return CustomElevatedButton(
-              buttonText: ProductConstants.addQuestion,
-              onPressed: () =>
-                  context.router.push(AddQARoute(isQuestionPage: true)),
+            return Center(
+              child: CustomElevatedButton(
+                buttonText: ProductConstants.addQuestion,
+                buttonTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+                onPressed: () =>
+                    context.router.push(AddQARoute(isQuestionPage: true)),
+              ),
             );
           }
           return ListView.builder(
             itemCount: questionsStore.questionList.length,
             itemBuilder: (context, index) {
               final question = questionsStore.questionList[index];
-              return ExpansionTile(
-                title: Text(question.title ?? ''),
-                children: [
-                  Padding(
-                    padding: const PagePadding.all(),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                          itemCount: question.answers.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int answerIndex) {
-                            return ListTile(
-                              title: Text(
-                                question.answers[answerIndex].title ?? '',
-                              ),
-                              trailing: CustomElevatedButton(
-                                buttonText: ProductConstants.solve,
-                                onPressed: () => solveOnPressed(
-                                  question,
-                                  answerIndex,
+              return Dismissible(
+                key: Key(question.title.toString()),
+                background: const _DeleteContainer(),
+                direction: DismissDirection.startToEnd,
+                onDismissed: (direction) {
+                  questionsStore.removeQuestion(
+                    question,
+                  );
+                  showNotification(question);
+                },
+                child: ExpansionTile(
+                  title: Text(question.title ?? ''),
+                  children: [
+                    Padding(
+                      padding: const PagePadding.all(),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            itemCount: question.answers.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder:
+                                (BuildContext context, int answerIndex) {
+                              return ListTile(
+                                title: Text(
+                                  question.answers[answerIndex].title ?? '',
                                 ),
+                                trailing: CustomElevatedButton(
+                                  buttonText: ProductConstants.solve,
+                                  onPressed: () async {
+                                    await solveOnPressed(
+                                      question,
+                                      answerIndex,
+                                    ).makeWithLoadingDialog(
+                                      context: context,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                          CustomElevatedButton(
+                            buttonText: ProductConstants.addAnswer,
+                            onPressed: () => context.router.push(
+                              AddQARoute(
+                                isQuestionPage: false,
+                                question: question,
                               ),
-                            );
-                          },
-                        ),
-                        ElevatedButton(
-                          onPressed: () => context.router.push(
-                            AddQARoute(
-                              isQuestionPage: false,
-                              question: question,
                             ),
                           ),
-                          child: const Text(ProductConstants.addAnswer),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             },
           );
         },
+      ),
+    );
+  }
+}
+
+final class _DeleteContainer extends StatelessWidget {
+  const _DeleteContainer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.red,
+      alignment: Alignment.centerLeft,
+      padding: const PagePadding.horizontalSymmetric(),
+      child: const Icon(
+        Icons.delete,
+        color: Colors.white,
       ),
     );
   }
