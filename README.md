@@ -13,7 +13,7 @@ We developed an AI application for the BTK HACKATHON. This app can efficiently s
 
 ## Features
 
-* **Home:** A welcoming page introducing the app.
+* **Home:** A welcoming page for introducing the app.
 
 * **Questions List:** Manages added questions and answers.
 
@@ -31,9 +31,6 @@ We developed an AI application for the BTK HACKATHON. This app can efficiently s
 ## The Libraries and Technologies
 
 * **State Management**
-
-  * **equatable:** Simplifies value comparison for objects.
-
   * **Mobx:** Implements the Mobx pattern for state management.
 
 * **API**
@@ -48,7 +45,7 @@ We developed an AI application for the BTK HACKATHON. This app can efficiently s
   
 * **Utilities**
   * **kartal:** Provides helpful utility extensions for Flutter development.
-    
+  * **equatable:** Simplifies value comparison for objects.
   * **image_picker:** Allows users to pick images from the gallery or camera.
 
 
