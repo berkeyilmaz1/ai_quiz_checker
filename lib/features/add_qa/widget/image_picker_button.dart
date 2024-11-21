@@ -2,8 +2,8 @@ part of '../view/add_qa_view.dart';
 
 final class ImagePickerButton extends StatelessWidget {
   const ImagePickerButton({
-    super.key,
     required this.onTap,
+    super.key,
   });
   final VoidCallback onTap;
 
@@ -14,10 +14,10 @@ final class ImagePickerButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.5),
-          borderRadius: BorderRadiusGeneral.allLow(),
+          borderRadius: const BorderRadiusGeneral.medium(),
         ),
-        padding: PagePadding.all(),
-        child: Icon(
+        padding: const PagePadding.all(),
+        child: const Icon(
           Icons.download_rounded,
           color: Colors.white,
           size: WidgetSizes.spacingXxlL12,

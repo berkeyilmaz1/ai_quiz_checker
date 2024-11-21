@@ -49,7 +49,7 @@ final class CustomTextField extends StatelessWidget {
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             labelText: labelText,
             border: const OutlineInputBorder(
-              borderRadius: BorderRadiusGeneral.allLow(),
+              borderRadius: BorderRadiusGeneral.medium(),
             ),
           ),
         ),
