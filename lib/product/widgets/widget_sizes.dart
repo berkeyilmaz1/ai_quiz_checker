@@ -19,5 +19,5 @@ final class WidgetSizes {
   static const double spacingL = 20;
 
   /// [value] is 200.0
-  static const double spacingXxlL12 = 200;
+  static const double spacingtwoHundred = 200;
 }

@@ -20,7 +20,7 @@ final class ImagePickerButton extends StatelessWidget {
         child: const Icon(
           Icons.download_rounded,
           color: Colors.white,
-          size: WidgetSizes.spacingXxlL12,
+          size: WidgetSizes.spacingtwoHundred,
         ),
       ),
     );

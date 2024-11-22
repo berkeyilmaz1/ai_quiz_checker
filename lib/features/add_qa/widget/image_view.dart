@@ -2,9 +2,9 @@ part of '../view/add_qa_view.dart';
 
 final class ImageView extends StatelessWidget {
   const ImageView({
-    super.key,
     required this.selectedImage,
     required this.onTap,
+    super.key,
   });
 
   final File? selectedImage;
@@ -13,11 +13,11 @@ final class ImageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: PagePadding.all(),
+      padding: const PagePadding.all(),
       child: GestureDetector(
         onTap: onTap,
-        child: Container(
-          height: WidgetSizes.spacingXxlL12,
+        child: SizedBox(
+          height: WidgetSizes.spacingtwoHundred,
           child: Image.file(selectedImage!),
         ),
       ),
